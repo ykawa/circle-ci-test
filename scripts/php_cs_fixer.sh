@@ -1,5 +1,10 @@
+pwd
+
 PROJECT_TOP_DIR=$(dirname $0)/..
 cd $PROJECT_TOP_DIR
+
+pwd
+
 
 IFS=$'\n'
 COMMIT_SCA_FILES=($(git diff --name-only --diff-filter=ACMRTUXB origin/master ))
