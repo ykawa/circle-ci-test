@@ -5,6 +5,8 @@ cd $PROJECT_TOP_DIR
 
 pwd
 
+find .
+
 
 IFS=$'\n'
 COMMIT_SCA_FILES=($(git diff --name-only --diff-filter=ACMRTUXB origin/master ))
