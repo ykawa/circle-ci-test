@@ -60,4 +60,5 @@ workflows:
               ignore: /.*/
             branches:
               ignore:
-                - //master$/
+                - /^.*\/?master$/
+
