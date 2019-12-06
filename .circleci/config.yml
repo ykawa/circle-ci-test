@@ -7,15 +7,15 @@ references:
     php_cs_fixer: &php_cs_fixer
       name: "Execute php_cs_fixer"
       command: |
-        cd ~/project
-        scripts/php_cs_fixer.sh "${CIRCLE_BRANCH}"
+        if [[ ! "/${CIRCLE_BRANCH}" =~ /master$ ]]; then
+          cd ~/project
+          scripts/php_cs_fixer.sh "${CIRCLE_BRANCH}"
+        fi
     install_compoer: &install_compoer
       name: "install library"
       command: |
-        if [[ ! "/${CIRCLE_BRANCH}" =~ /master$ ]]; then
-          cd ~/project
-          composer install --no-interaction --prefer-dist --verbose
-        fi
+        cd ~/project
+        composer install --no-interaction --prefer-dist --verbose
 
   restore_cache:
     restore_cache_composer_json: &restore_cache_composer_json
@@ -37,7 +37,6 @@ defaults: &defaults
 version: 2
 jobs:
   build:
-    <<: *defaults
     docker:
       - image: circleci/php:5.6-cli-stretch
 

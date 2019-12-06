@@ -11,6 +11,7 @@ unset IFS
 set -e
 
 echo "${COMMIT_SCA_FILES[@]}"
+echo "${#COMMIT_SCA_FILES[@]}"
 if [ ${#COMMIT_SCA_FILES[@]} -gt 0 ]; then
   ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist --stop-on-violation -vvv --dry-run --diff --path-mode=intersection "${COMMIT_SCA_FILES[@]}"
 fi
