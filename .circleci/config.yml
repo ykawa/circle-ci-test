@@ -12,7 +12,7 @@ references:
     install_compoer: &install_compoer
       name: "install library"
       command: |
-        if [ "${CIRCLE_BRANCH}" != "master" ]; then
+        if [[ ! "/${CIRCLE_BRANCH}" =~ /master$ ]]; then
           cd ~/project
           composer install --no-interaction --prefer-dist --verbose
         fi
