@@ -4,32 +4,43 @@
 #
 version: 2
 
-php_cs_fixer: &php_cs_fixer
-  run: |
-    scripts/php_cs_fixer.sh
-    #composer run php-cs-fixer-dry-run || (echo "Coding standards are not respected. Run 'composer run php-cs-fixer'" && exit 1)
+references:
+  commands:
+    php_cs_fixer: &php_cs_fixer
+      command: |
+        scripts/php_cs_fixer.sh
+    install_compoer: &install_compoer
+      name: composer install by composer-php-cs-fixer.json
+      command: |
+        composer install -n --prefer-dist
+
+  restore_cache:
+    restore_cache_composer_json: &restore_cache_composer_json
+      keys:
+        - v1-dependencies-{{ checksum "composer-php-cs-fixer.json" }}
+        - v1-dependencies-
+
+  saves_caches:
+    save_cache_composer_json: &save_cache_composer_json
+      key: v1-dependencies-{{ checksum "composer-php-cs-fixer.json" }}
+      paths:
+        - ./vendor
+
+defaults: &defaults
+  environment: COMPOSER composer-php-cs-fixer.json
 
 jobs:
   build:
+    <<: *defaults
     docker:
-      # Specify the version you desire here
       - image: circleci/php:5.6-cli-stretch
 
     steps:
       - checkout
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
-            - v1-dependencies-
-
-      - run: composer install -n --prefer-dist
-
-      - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
-          paths:
-            - ./vendor
-
+      - restore_cache: *restore_cache_composer_json
+      - run: *install_compoer
+      - save_cache: *save_cache_composer_json
       - <<: *php_cs_fixer
+
