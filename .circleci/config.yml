@@ -10,7 +10,7 @@ php_cs_fixer: &php_cs_fixer
     #composer run php-cs-fixer-dry-run || (echo "Coding standards are not respected. Run 'composer run php-cs-fixer'" && exit 1)
 
 jobs:
-  php56:
+  build:
     docker:
       # Specify the version you desire here
       - image: circleci/php:5.6-cli-stretch
