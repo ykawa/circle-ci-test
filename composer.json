@@ -11,8 +11,8 @@
         "friendsofphp/php-cs-fixer": "~2.2.20"
     },
     "scripts": {
-	    php-"cs-fixer-dry-run": [
-		    "php-cs-fixer fix --dry-run -vvv --diff"
-	    ]
+        "php-cs-fixer-dry-run": [
+            "php-cs-fixer fix --dry-run -vvv --diff"
+        ]
     }
 }
