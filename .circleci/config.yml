@@ -2,15 +2,14 @@
 #
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
-version: 2
-
 references:
   commands:
     php_cs_fixer: &php_cs_fixer
+      name: Execute php_cs_fixer
       command: |
         scripts/php_cs_fixer.sh
     install_compoer: &install_compoer
-      name: composer install by composer-php-cs-fixer.json
+      name: install library
       command: |
         composer install -n --prefer-dist
 
@@ -29,6 +28,7 @@ references:
 defaults: &defaults
   environment: COMPOSER composer-php-cs-fixer.json
 
+version: 2
 jobs:
   build:
     <<: *defaults
@@ -43,4 +43,3 @@ jobs:
       - run: *install_compoer
       - save_cache: *save_cache_composer_json
       - <<: *php_cs_fixer
-
