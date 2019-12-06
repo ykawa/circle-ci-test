@@ -5,6 +5,7 @@
  * you can change this configuration by importing this file.
  */
 return PhpCsFixer\Config::create()
+    ->setUsingCache(false)
     ->setRiskyAllowed(true)
     ->setRules([
         // There MUST be one blank line after the namespace declaration.
@@ -216,8 +217,8 @@ return PhpCsFixer\Config::create()
         // PHP arrays should be declared using the configured syntax (requires PHP >= 5.4 for short syntax).
         'array_syntax' => ['syntax'=>'short'],
     ])
-    ->setFinder(PhpCsFixer\Finder::create()
-        ->exclude(['vendor', 'app/libraries', 'app/storage'])
-        ->in(__DIR__)
-    )
-;
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->exclude(['vendor', 'app/libraries', 'app/storage'])
+            ->in(__DIR__)
+    );

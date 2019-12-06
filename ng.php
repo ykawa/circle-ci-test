@@ -1,6 +1,3 @@
-<?
+<?php
 
-echo "NG";
-ec
-
-
+echo 'NG';
