@@ -1,0 +1,13 @@
+{
+    "name": "ykawa/circle-ci-test",
+    "authors": [
+        {
+            "name": "ykawa",
+            "email": "ykawa@flugels.redirectme.net"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.2.20"
+    }
+}
