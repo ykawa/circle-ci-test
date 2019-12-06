@@ -68,6 +68,9 @@
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "php-cs-fixer-dry-run": [
+            "php-cs-fixer fix --dry-run -vvv --diff app"
         ]
     },
     "config": {

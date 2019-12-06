@@ -5,13 +5,17 @@
 references:
   commands:
     php_cs_fixer: &php_cs_fixer
-      name: Execute php_cs_fixer
+      name: "Execute php_cs_fixer"
       command: |
-        scripts/php_cs_fixer.sh
+        cd ~/project
+        scripts/php_cs_fixer.sh "${CIRCLE_BRANCH}"
     install_compoer: &install_compoer
-      name: install library
+      name: "install library"
       command: |
-        composer install -n --prefer-dist
+        if [ "${CIRCLE_BRANCH}" != "master" ]; then
+          cd ~/project
+          composer install --no-interaction --prefer-dist --verbose
+        fi
 
   restore_cache:
     restore_cache_composer_json: &restore_cache_composer_json
@@ -26,7 +30,9 @@ references:
         - ./vendor
 
 defaults: &defaults
-  environment: COMPOSER composer-php-cs-fixer.json
+  working_directory: ~/project
+  environment:
+    COMPOSER: composer-php-cs-fixer.json
 
 version: 2
 jobs:
@@ -35,11 +41,22 @@ jobs:
     docker:
       - image: circleci/php:5.6-cli-stretch
 
+    <<: *defaults
     steps:
       - checkout
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run: sudo apt update
       - run: sudo docker-php-ext-install zip
       - restore_cache: *restore_cache_composer_json
       - run: *install_compoer
       - save_cache: *save_cache_composer_json
-      - <<: *php_cs_fixer
+      - run: *php_cs_fixer
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore:
+                - master
