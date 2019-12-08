@@ -15,6 +15,8 @@ set -e
 if [ ${#COMMIT_SCA_FILES[@]} -eq 0 ]; then
   echo "Does not perform PHP format check."
 else
+  echo "${COMMIT_SCA_FILES[@]}"
+  echo ""
   ./vendor/bin/php-cs-fixer fix \
 	  --config=.php_cs.dist \
 	  --stop-on-violation \
