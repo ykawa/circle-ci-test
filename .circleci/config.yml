@@ -39,7 +39,18 @@ jobs:
   build:
     docker:
       - image: circleci/php:5.6-cli-stretch
+    <<: *defaults
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo docker-php-ext-install zip
+      - restore_cache: *restore_cache_composer_json
+      - run: *install_compoer
+      - save_cache: *save_cache_composer_json
 
+  php cs fixer:
+    docker:
+      - image: circleci/php:5.6-cli-stretch
     <<: *defaults
     steps:
       - checkout
@@ -52,9 +63,18 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  PR:
     jobs:
       - build:
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              ignore:
+                - /^.*\/?master$/
+      - php cs fixer:
+          requires:
+            - build
           filters:
             tags:
               ignore: /.*/
