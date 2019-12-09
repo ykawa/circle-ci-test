@@ -67,11 +67,9 @@ workflows:
     jobs:
       - build:
           filters:
-            tags:
-              ignore: /.*/
             branches:
               ignore:
-                - /^.*\/?master$/
+                - /.*/
       - php cs fixer:
           requires:
             - build
