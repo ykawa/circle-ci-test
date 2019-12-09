@@ -42,11 +42,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip
-      - restore_cache: *restore_cache_composer_json
-      - run: *install_compoer
-      - save_cache: *save_cache_composer_json
 
   php cs fixer:
     docker:
