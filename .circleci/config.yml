@@ -15,7 +15,7 @@ references:
       name: "install library"
       command: |
         cd ~/project
-        composer install --no-interaction --prefer-dist --verbose
+        COMPOSER=composer-php-cs-fixer.json composer install --no-interaction --prefer-dist --verbose
 
   restore_cache:
     restore_cache_composer_json: &restore_cache_composer_json
@@ -32,7 +32,7 @@ references:
 defaults: &defaults
   working_directory: ~/project
   environment:
-    COMPOSER: composer-php-cs-fixer.json
+    COMPOSER: composer.json
 
 version: 2
 jobs:
