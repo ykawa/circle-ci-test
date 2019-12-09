@@ -71,8 +71,6 @@ workflows:
               ignore:
                 - /.*/
       - php cs fixer:
-          requires:
-            - build
           filters:
             tags:
               ignore: /.*/
