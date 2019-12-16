@@ -9,8 +9,7 @@ references:
       command: |
         if [[ ! "/${CIRCLE_BRANCH}" =~ /master$ ]]; then
           cd ~/project
-          env | sort
-          scripts/php_cs_fixer.sh "${CIRCLE_BRANCH}"
+          scripts/php_cs_fixer.sh "${CIRCLE_BRANCH}" "${CIRCLE_BUILD_NUM}"
         fi
     install_compoer: &install_compoer
       name: "install library"
