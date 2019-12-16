@@ -10,8 +10,11 @@ echo "BITBUCKET BRANCH NAME: ${BITBUCKET_BRANCH_NAME}"
 set +e
 IFS=$'\n'
 if [ "${CIRCLECI_RUNNING_ON_LOCAL}" = "true" ]; then
+  echo "RUNNING ON LOCAL"
   COMMIT_SCA_FILES=($(git diff -p --name-only --reverse --diff-filter=d --format="" master...${BITBUCKET_BRANCH_NAME} | grep \.php$ | sort | uniq))
 else
+  echo "RUNNING ON CIRCLECI"
+  COMMIT_SCA_FILES=($(git diff -p --name-only --reverse --diff-filter=d --format="" master...${BITBUCKET_BRANCH_NAME} | grep \.php$ | sort | uniq))
   COMMIT_SCA_FILES=($(git diff -p --name-only --reverse --diff-filter=d --format="" origin/master...origin/${BITBUCKET_BRANCH_NAME} | grep \.php$ | sort | uniq))
 fi
 unset IFS
